@@ -45,6 +45,8 @@ def load_datetime(value, dt_format):
     return datetime.strptime(value, dt_format)
 
 
+# Date/time formatting
+
 def datetime_to_string(timestamp, dt_format='%Y-%m-%d %H:%M:%S'):
     """
     Format datetime object to string
@@ -59,6 +61,8 @@ def pretty_date(datetime):
         return datetime_to_string(datetime, dt_format='%Y-%m-%d')
     return datetime_to_string(datetime, dt_format='%Y-%m-%d %H:%M')
 
+
+# Output
 
 class bcolors:
     HEADER = '\033[95m'
@@ -91,6 +95,8 @@ def print_section(section, items, color=bcolors.OKBLUE):
         print()
 
 
+# Data handling
+
 def create_lists(items):
     items_due = []
     items_today = []
@@ -118,19 +124,15 @@ def create_lists(items):
 def get_all_items():
     login_data = settings.login_data
     login_url = 'https://api.ticktick.com/api/v2/user/signon?wc=true&remember=true'
-
     tasks_url = 'https://api.ticktick.com/api/v2/batch/check/0?_={}'.format(str(datetime.now()).split('.')[0])
 
-
     s = requests.session()
-
     s.post(login_url, json=login_data)
-
     response = s.get(tasks_url)
 
     items_due, items_today, items_future, items_rest = create_lists(response.json()['syncTaskBean']['update'])
     print_section('today', items_today, color=bcolors.OKGREEN)
-    print_section('due', items_due, color=bcolors.FAIL)
+    print_section('overdue', items_due, color=bcolors.FAIL)
     #print_section('rest', items_rest)
 
 
