@@ -106,3 +106,6 @@ ENV/
 # ctags
 tags
 TAGS
+
+# Do not check in project settings
+settings.py
