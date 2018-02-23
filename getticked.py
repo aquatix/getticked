@@ -97,8 +97,12 @@ def print_section(section, items, color=bcolors.OKBLUE):
 
 # Data handling
 
-def get_key(item):
+def get_date_sortkey(item):
     return item['dueDate']
+
+
+def get_order_sortkey(item):
+    return item['sortOrder']
 
 
 def create_lists(items):
@@ -122,9 +126,10 @@ def create_lists(items):
         else:
             items_rest.append(item)
 
-    items_due = sorted(items_due, key=get_key)
-    items_today = sorted(items_today, key=get_key)
-    items_future = sorted(items_future, key=get_key)
+    items_due = sorted(items_due, key=get_date_sortkey)
+    items_today = sorted(items_today, key=get_date_sortkey)
+    items_future = sorted(items_future, key=get_date_sortkey)
+    items_rest = sorted(items_future, key=get_order_sortkey)
     return items_due, items_today, items_future, items_rest
 
 
