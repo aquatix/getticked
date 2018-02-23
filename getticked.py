@@ -146,9 +146,9 @@ def create_lists(items, project_names):
         if item['dueDate']:
             # 2018-02-23T14:30:00.000+0000
             item['dueDateObject'] = load_datetime(item['dueDate'], '%Y-%m-%dT%H:%M:%S.000%z')
-            if item['dueDateObject'] < current_moment and item['dueDateObject'].date() != current_moment.date():
+            if item['dueDateObject'].astimezone(get_localzone()) < current_moment and item['dueDateObject'].astimezone(get_localzone()).date() != current_moment.date():
                 items_due.append(item)
-            if item['dueDateObject'].date() == current_moment.date():
+            elif item['dueDateObject'].astimezone(get_localzone()).date() == current_moment.date():
                 items_today.append(item)
             else:
                 items_future.append(item)
