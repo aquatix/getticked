@@ -86,6 +86,9 @@ def pretty_print(item, color=bcolors.OKBLUE):
     if 'dueDateObject' in item:
         formatted_item = '{begin}{message: <{width}}{end} '.format(begin=bcolors.WARNING, message=pretty_date(item['dueDateObject'].astimezone(get_localzone())), width=17, end=bcolors.ENDC) + formatted_item
 
+    if item['remindTime']:
+        formatted_item += '  {}⏰{}{}'.format(bcolors.WARNING, pretty_date(item['remindTimeObject'].astimezone(get_localzone())), bcolors.ENDC)
+
     if item['repeatFlag']:
         formatted_item += ' {}🔃{}'.format(bcolors.WHITE, bcolors.ENDC)
 
@@ -136,6 +139,10 @@ def create_lists(items, project_names):
         except KeyError:
             # Fallback
             item['projectName'] = 'Inbox'
+
+        if item['remindTime']:
+            item['remindTimeObject'] = load_datetime(item['remindTime'], '%Y-%m-%dT%H:%M:%S.000%z')
+
         if item['dueDate']:
             # 2018-02-23T14:30:00.000+0000
             item['dueDateObject'] = load_datetime(item['dueDate'], '%Y-%m-%dT%H:%M:%S.000%z')
