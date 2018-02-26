@@ -86,6 +86,9 @@ def pretty_print(item, color=bcolors.OKBLUE):
     if 'dueDateObject' in item:
         formatted_item = '{begin}{message: <{width}}{end} '.format(begin=bcolors.WARNING, message=pretty_date(item['dueDateObject'].astimezone(get_localzone())), width=17, end=bcolors.ENDC) + formatted_item
 
+    if item['reminder'] and not item['remindTime']:
+        formatted_item += ' {}⏰{}'.format(bcolors.WHITE, bcolors.ENDC)
+
     if item['remindTime']:
         formatted_item += '  {}⏰{}{}'.format(bcolors.WARNING, pretty_date(item['remindTimeObject'].astimezone(get_localzone())), bcolors.ENDC)
 
