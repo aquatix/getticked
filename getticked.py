@@ -172,7 +172,11 @@ def get_all_items():
     projects_url = 'https://api.ticktick.com/api/v2/projects?_={}'.format(str(datetime.now()).split('.')[0])
 
     s = requests.session()
-    s.post(login_url, json=login_data)
+    try:
+        s.post(login_url, json=login_data)
+    except requests.exceptions.ConnectionError:
+        print('{begin}ERROR:{end} Cannot connect to api.ticktick.com, connection error'.format(begin=bcolors.FAIL, end=bcolors.ENDC))
+        return
     response = s.get(tasks_url)
 
     projects = s.get(projects_url)
