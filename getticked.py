@@ -187,7 +187,7 @@ def get_all_items():
     projects = s.get(projects_url)
     project_names = make_projects_list(projects.json())
 
-    items_due, items_today, items_future, items_rest = create_lists(
+    items_due, items_today, _items_future, _items_rest = create_lists(
         response.json()['syncTaskBean']['update'],
         project_names
     )
