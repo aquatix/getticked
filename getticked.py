@@ -96,6 +96,9 @@ def print_section(section, items, color=bcolors.OKBLUE):
     print()
     print('{}== {} ======{}'.format(bcolors.BOLD, section.upper(), bcolors.ENDC))
     print()
+    if not items:
+        # If nothing is overdue, be happy
+        print('{}☀️ None ☀️{}'.format(bcolors.OKGREEN, bcolors.ENDC))
     for item in items:
         pretty_print(item, color)
     if items:
