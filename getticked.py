@@ -10,18 +10,14 @@ import settings
 # Timezone helpers
 
 def is_dst(zonename):
-    """
-    Find out whether it's Daylight Saving Time in this timezone
-    """
+    """Find out whether it's Daylight Saving Time in this timezone"""
     tz = pytz.timezone(zonename)
     now = pytz.utc.localize(datetime.utcnow())
     return now.astimezone(tz).dst() != timedelta(0)
 
 
 class OffsetTime(StaticTzInfo):
-    """
-    A dumb timezone based on offset such as +0530, -0600, etc.
-    """
+    """A dumb timezone based on offset such as +0530, -0600, etc."""
     def __init__(self, offset):
         hours = int(offset[:3])
         minutes = int(offset[0] + offset[3:])
@@ -29,9 +25,7 @@ class OffsetTime(StaticTzInfo):
 
 
 def load_datetime(value, dt_format):
-    """
-    Create timezone-aware datetime object
-    """
+    """Create timezone-aware datetime object"""
     if dt_format.endswith('%z'):
         dt_format = dt_format[:-2]
         offset = value[-5:]
@@ -48,14 +42,12 @@ def load_datetime(value, dt_format):
 # Date/time formatting
 
 def datetime_to_string(timestamp, dt_format='%Y-%m-%d %H:%M:%S'):
-    """
-    Format datetime object to string
-    """
+    """Format datetime object to string"""
     return timestamp.strftime(dt_format)
 
 
 def pretty_date(datetime):
-    """ Convert a datetime object into a nicely readable string """
+    """Convert a datetime object into a nicely readable string"""
     if datetime_to_string(datetime, dt_format='%H:%M') == '00:00':
         # all-day event; TODO: better check? Items have 'isAllDay' boolean.
         return datetime_to_string(datetime, dt_format='%Y-%m-%d')
@@ -81,7 +73,7 @@ class bcolors:
 
 
 def pretty_print(item, color=bcolors.OKBLUE):
-    """ Pretty print a todo item """
+    """Pretty print a todo item"""
     formatted_item = '{}{}{}'.format(color, item['title'].strip(), bcolors.ENDC)
     if 'dueDateObject' in item:
         formatted_item = '{begin}{message: <{width}}{end} '.format(begin=bcolors.WARNING, message=pretty_date(item['dueDateObject'].astimezone(get_localzone())), width=17, end=bcolors.ENDC) + formatted_item
