@@ -1,11 +1,11 @@
 from datetime import datetime, timedelta
+
+import pytz
 import requests
 from pytz.tzinfo import StaticTzInfo
-import pytz
 from tzlocal import get_localzone
 
 import settings
-
 
 # Timezone helpers
 
