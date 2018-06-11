@@ -98,7 +98,7 @@ def print_section(section, items, color=bcolors.OKBLUE):
     print()
     if not items:
         # If nothing is (over)due, be happy
-        print('{}☀️ None ☀️{}'.format(bcolors.OKGREEN, bcolors.ENDC))
+        print('{}☀️ Nothing ☀️{}'.format(bcolors.OKGREEN, bcolors.ENDC))
     for item in items:
         pretty_print(item, color)
     if items:
