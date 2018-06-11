@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 
 import pytz
 import requests
-from pytz.tzinfo import StaticTzInfo
 from tzlocal import get_localzone
 
 import settings
@@ -16,7 +15,7 @@ def is_dst(zonename):
     return now.astimezone(tz).dst() != timedelta(0)
 
 
-class OffsetTime(StaticTzInfo):
+class OffsetTime(pytz.tzinfo.StaticTzInfo):
     """A dumb timezone based on offset such as +0530, -0600, etc."""
     def __init__(self, offset):
         hours = int(offset[:3])
@@ -46,12 +45,12 @@ def datetime_to_string(timestamp, dt_format='%Y-%m-%d %H:%M:%S'):
     return timestamp.strftime(dt_format)
 
 
-def pretty_date(datetime):
+def pretty_date(datetimestamp):
     """Convert a datetime object into a nicely readable string"""
-    if datetime_to_string(datetime, dt_format='%H:%M') == '00:00':
+    if datetime_to_string(datetimestamp, dt_format='%H:%M') == '00:00':
         # all-day event; TODO: better check? Items have 'isAllDay' boolean.
-        return datetime_to_string(datetime, dt_format='%Y-%m-%d')
-    return datetime_to_string(datetime, dt_format='%Y-%m-%d %H:%M')
+        return datetime_to_string(datetimestamp, dt_format='%Y-%m-%d')
+    return datetime_to_string(datetimestamp, dt_format='%Y-%m-%d %H:%M')
 
 
 # Output
@@ -76,13 +75,21 @@ def pretty_print(item, color=bcolors.OKBLUE):
     """Pretty print a todo item"""
     formatted_item = '{}{}{}'.format(color, item['title'].strip(), bcolors.ENDC)
     if 'dueDateObject' in item:
-        formatted_item = '{begin}{message: <{width}}{end} '.format(begin=bcolors.WARNING, message=pretty_date(item['dueDateObject'].astimezone(get_localzone())), width=17, end=bcolors.ENDC) + formatted_item
+        formatted_item = '{begin}{message: <{width}}{end} '.format(
+            begin=bcolors.WARNING,
+            message=pretty_date(item['dueDateObject'].astimezone(get_localzone())),
+            width=17,
+            end=bcolors.ENDC
+        ) + formatted_item
 
     if item['reminder'] and not item['remindTime']:
         formatted_item += ' {}⏰{}'.format(bcolors.WHITE, bcolors.ENDC)
 
     if item['remindTime']:
-        formatted_item += '  {}⏰{}{}'.format(bcolors.WARNING, pretty_date(item['remindTimeObject'].astimezone(get_localzone())), bcolors.ENDC)
+        formatted_item += '  {}⏰{}{}'.format(
+            bcolors.WARNING,
+            pretty_date(item['remindTimeObject'].astimezone(get_localzone())), bcolors.ENDC
+        )
 
     if item['repeatFlag']:
         formatted_item += ' {}🔃{}'.format(bcolors.WHITE, bcolors.ENDC)
@@ -144,7 +151,8 @@ def create_lists(items, project_names):
         if item['dueDate']:
             # 2018-02-23T14:30:00.000+0000
             item['dueDateObject'] = load_datetime(item['dueDate'], '%Y-%m-%dT%H:%M:%S.000%z')
-            if item['dueDateObject'].astimezone(get_localzone()) < current_moment and item['dueDateObject'].astimezone(get_localzone()).date() != current_moment.date():
+            if (item['dueDateObject'].astimezone(get_localzone()) < current_moment and
+                    item['dueDateObject'].astimezone(get_localzone()).date() != current_moment.date()):
                 items_due.append(item)
             elif item['dueDateObject'].astimezone(get_localzone()).date() == current_moment.date():
                 items_today.append(item)
@@ -170,14 +178,19 @@ def get_all_items():
     try:
         s.post(login_url, json=login_data)
     except requests.exceptions.ConnectionError:
-        print('{begin}ERROR:{end} Cannot connect to api.ticktick.com, connection error'.format(begin=bcolors.FAIL, end=bcolors.ENDC))
+        print('{begin}ERROR:{end} Cannot connect to api.ticktick.com, connection error'.format(
+            begin=bcolors.FAIL, end=bcolors.ENDC
+        ))
         return
     response = s.get(tasks_url)
 
     projects = s.get(projects_url)
     project_names = make_projects_list(projects.json())
 
-    items_due, items_today, items_future, items_rest = create_lists(response.json()['syncTaskBean']['update'], project_names)
+    items_due, items_today, items_future, items_rest = create_lists(
+        response.json()['syncTaskBean']['update'],
+        project_names
+    )
     print_section('today', items_today, color=bcolors.OKGREEN)
     print_section('overdue', items_due, color=bcolors.FAIL)
     #print_section('rest', items_rest)
