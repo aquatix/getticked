@@ -146,11 +146,11 @@ def create_lists(items, project_names):
             item['projectName'] = 'Inbox'
 
         if item['remindTime']:
-            item['remindTimeObject'] = load_datetime(item['remindTime'], '%Y-%m-%dT%H:%M:%S.000%z')
+            item['remindTimeObject'] = load_datetime(item['remindTime'], '%Y-%m-%dT%H:%M:%S.%f%z')
 
         if item['dueDate']:
             # 2018-02-23T14:30:00.000+0000
-            item['dueDateObject'] = load_datetime(item['dueDate'], '%Y-%m-%dT%H:%M:%S.000%z')
+            item['dueDateObject'] = load_datetime(item['dueDate'], '%Y-%m-%dT%H:%M:%S.%f%z')
             if (item['dueDateObject'].astimezone(get_localzone()) < current_moment and
                     item['dueDateObject'].astimezone(get_localzone()).date() != current_moment.date()):
                 items_due.append(item)
