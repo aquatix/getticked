@@ -98,7 +98,7 @@ def pretty_print(item, color=bcolors.OKBLUE):
 
     if 'tags' in item and item['tags']:
         tags = ', '.join(item['tags'])
-        formatted_item += ' 🔖 {}'.format(tags)
+        formatted_item += ' 🔖 {}{}{}'.format(bcolors.DARKGRAY, tags, bcolors.ENDC)
 
     print(formatted_item)
 
