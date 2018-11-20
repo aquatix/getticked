@@ -82,7 +82,7 @@ def pretty_print(item, color=bcolors.OKBLUE):
             end=bcolors.ENDC
         ) + formatted_item
 
-    if item['reminder'] and not ('remindTime' in item and item['remindTime']):
+    if 'reminder' in item and item['reminder'] and not ('remindTime' in item and item['remindTime']):
         formatted_item += ' {}⏰{}'.format(bcolors.WHITE, bcolors.ENDC)
 
     if 'remindTime' in item and item['remindTime']:
