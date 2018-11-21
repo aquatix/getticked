@@ -86,7 +86,7 @@ def pretty_print(item, color=bcolors.OKBLUE):
         formatted_item += ' {}⏰{}'.format(bcolors.WHITE, bcolors.ENDC)
 
     if 'remindTime' in item and item['remindTime']:
-        formatted_item += '  {}⏰{}{}'.format(
+        formatted_item += '  {}⏰ {}{}'.format(
             bcolors.WARNING,
             pretty_date(item['remindTimeObject'].astimezone(get_localzone())), bcolors.ENDC
         )
