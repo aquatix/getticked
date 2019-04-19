@@ -10,4 +10,4 @@ idna==2.8                 # via requests
 pytz==2019.1
 requests==2.21.0
 tzlocal==1.5.1
-urllib3==1.24.1           # via requests
+urllib3==1.24.2           # via requests
