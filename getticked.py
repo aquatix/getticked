@@ -189,6 +189,11 @@ def get_all_items():
     response = s.get(tasks_url)
 
     projects = s.get(projects_url)
+    if not projects:
+        # Hm, nothing loaded
+        print()
+        print('No projects found')
+        return
     project_names = make_projects_list(projects.json())
 
     items_due, items_today, _items_future, _items_rest = create_lists(
