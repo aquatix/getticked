@@ -7,22 +7,22 @@
 astroid==2.2.5            # via pylint
 blessings==1.7            # via curtsies
 bpython==0.18
-certifi==2019.6.16        # via requests
+certifi==2019.9.11        # via requests
 chardet==3.0.4            # via requests
 curtsies==0.3.0           # via bpython
 greenlet==0.4.15          # via bpython
 idna==2.8                 # via requests
 isort==4.3.21             # via pylint
-lazy-object-proxy==1.4.1  # via astroid
+lazy-object-proxy==1.4.2  # via astroid
 mccabe==0.6.1             # via pylint
 pygments==2.4.2           # via bpython
 pylint==2.3.1
-pytz==2019.1
+pytz==2019.2
 requests==2.22.0
 six==1.12.0               # via astroid, blessings, bpython
 typed-ast==1.4.0          # via astroid
-typing==3.7.4             # via curtsies
+typing==3.7.4.1           # via curtsies
 tzlocal==2.0.0
-urllib3==1.25.3           # via requests
+urllib3==1.25.5           # via requests
 wcwidth==0.1.7            # via curtsies
 wrapt==1.11.2             # via astroid
