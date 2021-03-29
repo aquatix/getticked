@@ -4,24 +4,51 @@
 #
 #    pip-compile requirements-dev.in
 #
-astroid==2.4.2            # via pylint
-blessings==1.7            # via curtsies
-bpython==0.19             # via -r requirements-dev.in
-certifi==2020.6.20        # via requests
-chardet==3.0.4            # via requests
-curtsies==0.3.1           # via bpython
-greenlet==0.4.16          # via bpython
-idna==2.10                # via requests
-isort==4.3.21             # via pylint
-lazy-object-proxy==1.4.3  # via astroid
-mccabe==0.6.1             # via pylint
-pygments==2.6.1           # via bpython
-pylint==2.5.3             # via -r requirements-dev.in
-pytz==2020.1              # via -r requirements.in, tzlocal
-requests==2.24.0          # via -r requirements.in, bpython
-six==1.15.0               # via astroid, bpython
-toml==0.10.1              # via pylint
-tzlocal==2.1              # via -r requirements.in
-urllib3==1.25.9           # via requests
-wcwidth==0.2.5            # via curtsies
-wrapt==1.12.1             # via astroid
+astroid==2.4.2
+    # via pylint
+blessings==1.7
+    # via curtsies
+bpython==0.19
+    # via -r requirements-dev.in
+certifi==2020.6.20
+    # via requests
+chardet==3.0.4
+    # via requests
+curtsies==0.3.1
+    # via bpython
+greenlet==0.4.16
+    # via bpython
+idna==2.10
+    # via requests
+isort==4.3.21
+    # via pylint
+lazy-object-proxy==1.4.3
+    # via astroid
+mccabe==0.6.1
+    # via pylint
+pygments==2.7.4
+    # via bpython
+pylint==2.5.3
+    # via -r requirements-dev.in
+pytz==2020.1
+    # via
+    #   -r requirements.in
+    #   tzlocal
+requests==2.24.0
+    # via
+    #   -r requirements.in
+    #   bpython
+six==1.15.0
+    # via
+    #   astroid
+    #   bpython
+toml==0.10.1
+    # via pylint
+tzlocal==2.1
+    # via -r requirements.in
+urllib3==1.25.9
+    # via requests
+wcwidth==0.2.5
+    # via curtsies
+wrapt==1.12.1
+    # via astroid
