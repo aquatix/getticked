@@ -177,10 +177,19 @@ def get_all_items():
     login_url = 'https://api.ticktick.com/api/v2/user/signon?wc=true&remember=true'
     tasks_url = 'https://api.ticktick.com/api/v2/batch/check/0?_={}'.format(str(datetime.now()).split('.')[0])
     projects_url = 'https://api.ticktick.com/api/v2/projects?_={}'.format(str(datetime.now()).split('.')[0])
+    user_agent = {'User-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:90.0) Gecko/20100101 Firefox/90.0'}
+    headers = {'referer': 'https://ticktick.com'}
 
     s = requests.session()
     try:
-        s.post(login_url, json=login_data)
+        result = s.options(login_url, headers=headers)
+        result = s.post(login_url, json=login_data, headers=user_agent)
+        if result.status_code == 500:
+            if 'errorMessage' in result.json():
+                print('{begin}ERROR:{end} Cannot login to api.ticktick.com, error: {message}'.format(
+                    begin=bcolors.FAIL, end=bcolors.ENDC, message=result.json()['errorMessage']
+                ))
+                return
     except requests.exceptions.ConnectionError:
         print('{begin}ERROR:{end} Cannot connect to api.ticktick.com, connection error'.format(
             begin=bcolors.FAIL, end=bcolors.ENDC
