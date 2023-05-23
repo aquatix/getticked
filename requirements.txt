@@ -14,7 +14,7 @@ pytz==2021.1
     # via
     #   -r requirements.in
     #   tzlocal
-requests==2.25.1
+requests==2.31.0
     # via -r requirements.in
 tzlocal==2.1
     # via -r requirements.in
