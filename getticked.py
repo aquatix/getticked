@@ -175,10 +175,19 @@ def create_lists(items, project_names):
 def get_all_items():
     login_data = settings.login_data
     login_url = 'https://api.ticktick.com/api/v2/user/signon?wc=true&remember=true'
-    tasks_url = 'https://api.ticktick.com/api/v2/batch/check/0?_={}'.format(str(datetime.now()).split('.')[0])
-    projects_url = 'https://api.ticktick.com/api/v2/projects?_={}'.format(str(datetime.now()).split('.')[0])
+    # tasks_url = 'https://api.ticktick.com/api/v2/batch/check/0?_={}'.format(str(datetime.now()).split('.')[0])
+    tasks_url = 'https://api.ticktick.com/api/v2/batch/check/0'
+    # projects_url = 'https://api.ticktick.com/api/v2/projects?_={}'.format(str(datetime.now()).split('.')[0])
+    projects_url = 'https://api.ticktick.com/api/v2/projects'
     user_agent = {'User-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:90.0) Gecko/20100101 Firefox/90.0'}
     headers = {'referer': 'https://ticktick.com'}
+    session_headers = {
+        'referer': 'https://ticktick.com',
+        'Sec-Fetch-Dest': 'empty',
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Site': 'same-site',
+        'Sec-GPC': '1',
+    }
 
     s = requests.session()
     try:
@@ -190,14 +199,21 @@ def get_all_items():
                     begin=bcolors.FAIL, end=bcolors.ENDC, message=result.json()['errorMessage']
                 ))
                 return
+        print(result)
+        print(result.text)
     except requests.exceptions.ConnectionError:
         print('{begin}ERROR:{end} Cannot connect to api.ticktick.com, connection error'.format(
             begin=bcolors.FAIL, end=bcolors.ENDC
         ))
         return
-    response = s.get(tasks_url)
+    response = s.get(tasks_url, headers=session_headers)
+    print(response)
+    print(response.text)
 
-    projects = s.get(projects_url)
+    projects = s.get(projects_url, headers=session_headers)
+    print(projects)
+    print(projects.reason)
+    print(projects.text)
     if not projects:
         # Hm, nothing loaded
         print()
