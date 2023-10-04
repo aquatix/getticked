@@ -16,5 +16,5 @@ requests==2.31.0
     # via -r requirements.in
 tzlocal==5.0.1
     # via -r requirements.in
-urllib3==2.0.4
+urllib3==2.0.6
     # via requests
