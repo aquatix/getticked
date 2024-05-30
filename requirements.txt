@@ -8,13 +8,13 @@ certifi==2023.7.22
     # via requests
 charset-normalizer==3.2.0
     # via requests
-idna==3.4
+idna==3.7
     # via requests
 pytz==2023.3
     # via -r requirements.in
-requests==2.31.0
+requests==2.32.0
     # via -r requirements.in
 tzlocal==5.0.1
     # via -r requirements.in
-urllib3==2.0.4
+urllib3==2.0.7
     # via requests
