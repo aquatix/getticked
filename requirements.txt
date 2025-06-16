@@ -8,7 +8,7 @@ idna==3.7
     # via requests
 pytz==2024.1
     # via -r requirements.in
-requests==2.32.3
+requests==2.32.4
     # via -r requirements.in
 tzlocal==5.2
     # via -r requirements.in
